@@ -1,0 +1,78 @@
+import Topbar from "../../components/Topbar";
+import Sidebar from "../../components/Sidebar";
+import { getSiteSetting } from "../../../lib/queries";
+
+export default async function AdminSeoPage() {
+  const setting = await getSiteSetting();
+
+  return (
+    <>
+      <Topbar title="SEO & Premium Ayarları" />
+      <div className="layout">
+        <Sidebar
+          title="Admin"
+          links={[
+            { href: "/admin", label: "Dashboard" },
+            { href: "/admin/seo", label: "SEO & Premium", active: true },
+            { href: "/admin/ads", label: "Reklamlar" },
+            { href: "/admin/videos", label: "Videolar" },
+            { href: "/admin/shorts", label: "Shorts" },
+            { href: "/admin/categories", label: "Kategoriler" },
+            { href: "/admin/users", label: "Kullanıcılar" },
+            { href: "/admin/payments", label: "Ödemeler" }
+          ]}
+        />
+        <main className="page">
+          <div className="page-header">
+            <h2>SEO, premium deneme ve manuel ödeme ayarları</h2>
+            <p>Arama görünürlüğü ve premium akışlarını buradan kontrol edin.</p>
+          </div>
+
+          <section className="section-grid">
+            <div className="card">
+              <h3>SEO & Premium Ayarları</h3>
+              <form className="form">
+                <label>
+                  Başlık
+                  <input defaultValue={setting?.seoTitle ?? ""} name="title" />
+                </label>
+                <label>
+                  Açıklama
+                  <textarea defaultValue={setting?.seoDescription ?? ""} name="description" rows={3} />
+                </label>
+                <label>
+                  Anahtar Kelimeler
+                  <input defaultValue={setting?.seoKeywords ?? ""} name="keywords" />
+                </label>
+                <label>
+                  Premium Deneme (gün)
+                  <input defaultValue={setting?.premiumTrialDays ?? 7} name="trial" type="number" />
+                </label>
+                <button className="button" type="button">
+                  Güncelle
+                </button>
+              </form>
+            </div>
+            <div className="card">
+              <h3>Manuel IBAN Ödeme</h3>
+              <form className="form">
+                <label>
+                  IBAN
+                  <input name="iban" placeholder="TR00 ..." />
+                </label>
+                <label>
+                  Hesap Adı
+                  <input name="accountName" placeholder="Şirket adı" />
+                </label>
+                <button className="button" type="button">
+                  Kaydet
+                </button>
+              </form>
+            </div>
+          </section>
+        </main>
+      </div>
+      <footer>VideoHub Admin • SEO Ayarları</footer>
+    </>
+  );
+}

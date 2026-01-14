@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AdPlacement {
+  VIDEO
+  SHORTS
+}
+
+enum AdSlot {
+  PRE_ROLL
+  MID_ROLL
+  OVERLAY
+}
+
+model SiteSetting {
+  id               String   @id @default(cuid())
+  premiumTrialDays Int      @default(7)
+  seoTitle         String
+  seoDescription   String
+  seoKeywords      String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+
+  videos    Video[]
+  comments  Comment[]
+  likes     Like[]
+  payments  ManualPayment[]
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  videos    Video[]
+  shorts    Short[]
+}
+
+model Video {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  durationSeconds Int
+  views           Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  uploaderId String
+  uploader   User @relation(fields: [uploaderId], references: [id])
+
+  comments Comment[]
+  likes    Like[]
+  ads      VideoAd[]
+}
+
+model Short {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  durationSeconds Int
+  createdAt       DateTime @default(now())
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  uploaderId String
+  uploader   User @relation(fields: [uploaderId], references: [id])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  message   String
+  createdAt DateTime @default(now())
+
+  videoId String
+  video   Video @relation(fields: [videoId], references: [id])
+
+  authorId String
+  author   User @relation(fields: [authorId], references: [id])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  videoId String
+  video   Video @relation(fields: [videoId], references: [id])
+
+  userId String
+  user   User @relation(fields: [userId], references: [id])
+
+  @@unique([videoId, userId])
+}
+
+model ManualPayment {
+  id        String        @id @default(cuid())
+  amount    Int
+  iban      String
+  status    PaymentStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+
+  userId String
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Ad {
+  id              String     @id @default(cuid())
+  name            String
+  slot            AdSlot
+  durationSeconds Int
+  size            String
+  placement       AdPlacement
+  clickUrl        String
+  createdAt       DateTime   @default(now())
+
+  videos VideoAd[]
+}
+
+model VideoAd {
+  id      String @id @default(cuid())
+
+  videoId String
+  video   Video @relation(fields: [videoId], references: [id])
+
+  adId String
+  ad   Ad @relation(fields: [adId], references: [id])
+
+  @@unique([videoId, adId])
+}
