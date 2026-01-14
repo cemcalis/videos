@@ -1,15 +1,18 @@
-import { Search, Bell, User, Crown, Menu } from "lucide-react";
+import { Search, Bell, Crown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Logo from "./Logo";
+import UserMenu from "./UserMenu";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 interface HeaderProps {
-  isPremium?: boolean;
   onMenuClick?: () => void;
 }
 
-const Header = ({ isPremium = false, onMenuClick }: HeaderProps) => {
+const Header = ({ onMenuClick }: HeaderProps) => {
+  const { isPremium } = useAuthContext();
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
@@ -70,9 +73,7 @@ const Header = ({ isPremium = false, onMenuClick }: HeaderProps) => {
             </Button>
           </Link>
           
-          <Button variant="ghost" size="icon">
-            <User size={20} />
-          </Button>
+          <UserMenu />
         </div>
       </div>
     </header>
