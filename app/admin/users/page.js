@@ -5,6 +5,9 @@ import { getUsers } from "../../../lib/queries";
 export default async function AdminUsersPage() {
   const users = await getUsers();
 
+import { store } from "../../../data/store";
+
+export default function AdminUsersPage() {
   return (
     <>
       <Topbar title="Kullanıcı Yönetimi" />
@@ -33,6 +36,7 @@ export default async function AdminUsersPage() {
               <h3>Kullanıcı Listesi</h3>
               <div className="list">
                 {users.map((user) => (
+                {store.users.map((user) => (
                   <div key={user.id} className="list-item">
                     <div>
                       <strong>{user.name}</strong>
@@ -41,6 +45,10 @@ export default async function AdminUsersPage() {
                     </div>
                     <button className="button secondary" type="button">
                       Rol Güncelle
+                      <small>Premium: {user.premium ? "Aktif" : "Pasif"}</small>
+                    </div>
+                    <button className="button secondary" type="button">
+                      Premium Aç
                     </button>
                   </div>
                 ))}

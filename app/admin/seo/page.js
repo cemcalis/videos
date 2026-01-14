@@ -5,6 +5,9 @@ import { getSiteSetting } from "../../../lib/queries";
 export default async function AdminSeoPage() {
   const setting = await getSiteSetting();
 
+import { store } from "../../../data/store";
+
+export default function AdminSeoPage() {
   return (
     <>
       <Topbar title="SEO & Premium Ayarları" />
@@ -47,6 +50,19 @@ export default async function AdminSeoPage() {
                 <label>
                   Premium Deneme (gün)
                   <input defaultValue={setting?.premiumTrialDays ?? 7} name="trial" type="number" />
+                  <input defaultValue={store.seo.title} name="title" />
+                </label>
+                <label>
+                  Açıklama
+                  <textarea defaultValue={store.seo.description} name="description" rows={3} />
+                </label>
+                <label>
+                  Anahtar Kelimeler
+                  <input defaultValue={store.seo.keywords.join(", ")} name="keywords" />
+                </label>
+                <label>
+                  Premium Deneme (gün)
+                  <input defaultValue={store.stats.premiumTrialDays} name="trial" type="number" />
                 </label>
                 <button className="button" type="button">
                   Güncelle
@@ -63,6 +79,11 @@ export default async function AdminSeoPage() {
                 <label>
                   Hesap Adı
                   <input name="accountName" placeholder="Şirket adı" />
+                  <input defaultValue={store.manualPayment.iban} name="iban" />
+                </label>
+                <label>
+                  Hesap Adı
+                  <input defaultValue={store.manualPayment.accountName} name="accountName" />
                 </label>
                 <button className="button" type="button">
                   Kaydet

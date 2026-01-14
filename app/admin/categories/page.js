@@ -5,6 +5,9 @@ import { getCategories } from "../../../lib/queries";
 export default async function AdminCategoriesPage() {
   const categories = await getCategories();
 
+import { store } from "../../../data/store";
+
+export default function AdminCategoriesPage() {
   return (
     <>
       <Topbar title="Kategori Yönetimi" />
@@ -51,6 +54,11 @@ export default async function AdminCategoriesPage() {
                       <small>
                         {category._count.videos} video • {category._count.shorts} shorts
                       </small>
+                {store.categories.map((category) => (
+                  <div key={category.id} className="list-item">
+                    <div>
+                      <strong>{category.name}</strong>
+                      <small>{category.id}</small>
                     </div>
                     <button className="button secondary" type="button">
                       Sil

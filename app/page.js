@@ -10,6 +10,10 @@ export default async function HomePage() {
     getCategories(),
     getVideos()
   ]);
+import { store } from "../data/store";
+
+export default function HomePage() {
+  const { stats } = store;
 
   return (
     <>
@@ -23,12 +27,17 @@ export default async function HomePage() {
             { href: "/categories", label: "Kategoriler" },
             { href: "/videos", label: "Videolar" },
             { href: "/shorts", label: "Shorts" }
+            { href: "/auth", label: "Kayıt / Giriş" },
+            { href: "/videos", label: "Videolar" },
+            { href: "/shorts", label: "Shorts" },
+            { href: "/admin", label: "Admin Panel" }
           ]}
         />
         <main className="page">
           <div className="page-header">
             <h2>Profesyonel video platformu demoları</h2>
             <p>Arama, kategori ve video detay akışlarıyla gerçek YouTube benzeri yapı.</p>
+            <p>Premium deneme, manuel ödeme ve reklam yönetimi akışlarını keşfedin.</p>
           </div>
 
           <section className="stats">
@@ -47,6 +56,11 @@ export default async function HomePage() {
             <div className="stat">
               <span>Toplam Video</span>
               <strong>{formatNumber(stats.videos)}</strong>
+              <strong>{stats.activeAdSlots}</strong>
+            </div>
+            <div className="stat">
+              <span>Video Kategorisi</span>
+              <strong>{stats.categories}</strong>
             </div>
           </section>
 
@@ -98,6 +112,18 @@ export default async function HomePage() {
                   />
                 ))}
               </div>
+              <h3>Kullanıcı Akışları</h3>
+              <p>Kayıt, giriş, premium deneme ve manuel IBAN ödeme talebi.</p>
+              <a className="button" href="/auth">
+                Kayıt / Giriş
+              </a>
+            </div>
+            <div className="card">
+              <h3>Video Merkezi</h3>
+              <p>Video listesi, reklam slotları ve içerik öne çıkanları.</p>
+              <a className="button" href="/videos">
+                Videoları Gör
+              </a>
             </div>
             <div className="card">
               <h3>Shorts Akışı</h3>

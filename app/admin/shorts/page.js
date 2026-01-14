@@ -12,6 +12,9 @@ const toDuration = (seconds) => {
 export default async function AdminShortsPage() {
   const [shorts, categories] = await Promise.all([getShorts(), getCategories()]);
 
+import { store } from "../../../data/store";
+
+export default function AdminShortsPage() {
   return (
     <>
       <Topbar title="Shorts Yönetimi" />
@@ -60,6 +63,11 @@ export default async function AdminShortsPage() {
                 <label>
                   Süre (sn)
                   <input name="duration" type="number" min="10" />
+                  <input name="categoryId" placeholder="Kısa Videolar" />
+                </label>
+                <label>
+                  Süre
+                  <input name="duration" placeholder="0:42" />
                 </label>
                 <button className="button" type="button">
                   Shorts Ekle
@@ -70,6 +78,7 @@ export default async function AdminShortsPage() {
               <h3>Shorts Listesi</h3>
               <div className="list">
                 {shorts.map((short) => (
+                {store.shorts.map((short) => (
                   <div key={short.id} className="list-item">
                     <div>
                       <strong>{short.title}</strong>
@@ -77,6 +86,7 @@ export default async function AdminShortsPage() {
                       <small>
                         {toDuration(short.durationSeconds)} • {short.category.name} • {short.uploader.name}
                       </small>
+                      <small>{short.duration}</small>
                     </div>
                     <button className="button secondary" type="button">
                       Sil

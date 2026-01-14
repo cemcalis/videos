@@ -5,6 +5,9 @@ import { getSiteSetting } from "../../lib/queries";
 export default async function AuthPage() {
   const setting = await getSiteSetting();
 
+import { store } from "../../data/store";
+
+export default function AuthPage() {
   return (
     <>
       <Topbar title="Kayıt ve Giriş" />
@@ -55,6 +58,7 @@ export default async function AuthPage() {
               <p>Reklamsız premium denemeyi hemen etkinleştirin.</p>
               <button className="button" type="button">
                 {setting?.premiumTrialDays ?? 7} Gün Denemeyi Başlat
+                {store.stats.premiumTrialDays} Gün Denemeyi Başlat
               </button>
             </div>
 
@@ -68,6 +72,9 @@ export default async function AuthPage() {
                 IBAN: Yönetim panelinden tanımlanır.
                 <br />
                 Hesap Adı: Yönetim panelinden tanımlanır.
+                IBAN: {store.manualPayment.iban}
+                <br />
+                Hesap Adı: {store.manualPayment.accountName}
               </p>
             </div>
           </section>

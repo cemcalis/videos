@@ -12,6 +12,9 @@ const toDuration = (seconds) => {
 export default async function ShortsPage() {
   const shorts = await getShorts();
 
+import { store } from "../../data/store";
+
+export default function ShortsPage() {
   return (
     <>
       <Topbar title="Shorts Akışı" />
@@ -22,6 +25,7 @@ export default async function ShortsPage() {
             { href: "/shorts", label: "Shorts Akışı", active: true },
             { href: "/videos", label: "Videolar" },
             { href: "/categories", label: "Kategoriler" },
+            { href: "/auth", label: "Kayıt / Giriş" },
             { href: "/admin", label: "Admin Panel" }
           ]}
         />
@@ -32,6 +36,7 @@ export default async function ShortsPage() {
           </div>
           <section className="shorts-container">
             {shorts.map((short) => (
+            {store.shorts.map((short) => (
               <article key={short.id} className="short-card">
                 <div>
                   <h2>{short.title}</h2>
@@ -43,6 +48,10 @@ export default async function ShortsPage() {
                 <div className="ad">
                   <strong>Reklam</strong>
                   <div>{formatNumber(1)} slot aktif</div>
+                </div>
+                <div className="ad">
+                  <strong>Reklam</strong>
+                  <div>{short.ads.join(", ")}</div>
                 </div>
               </article>
             ))}

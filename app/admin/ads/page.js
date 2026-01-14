@@ -5,6 +5,9 @@ import { getAds } from "../../../lib/queries";
 export default async function AdminAdsPage() {
   const ads = await getAds();
 
+import { store } from "../../../data/store";
+
+export default function AdminAdsPage() {
   return (
     <>
       <Topbar title="Reklam Yönetimi" />
@@ -42,6 +45,9 @@ export default async function AdminAdsPage() {
                     <option value="PRE_ROLL">Pre-roll</option>
                     <option value="MID_ROLL">Mid-roll</option>
                     <option value="OVERLAY">Overlay</option>
+                    <option value="pre-roll">Pre-roll</option>
+                    <option value="mid-roll">Mid-roll</option>
+                    <option value="overlay">Overlay</option>
                   </select>
                 </label>
                 <label>
@@ -57,6 +63,8 @@ export default async function AdminAdsPage() {
                   <select name="placement">
                     <option value="VIDEO">Video</option>
                     <option value="SHORTS">Shorts</option>
+                    <option value="video">Video</option>
+                    <option value="shorts">Shorts</option>
                   </select>
                 </label>
                 <label>
@@ -72,6 +80,7 @@ export default async function AdminAdsPage() {
               <h3>Mevcut Reklamlar</h3>
               <div className="list">
                 {ads.map((ad) => (
+                {store.ads.map((ad) => (
                   <div key={ad.id} className="list-item">
                     <div>
                       <strong>{ad.name}</strong>

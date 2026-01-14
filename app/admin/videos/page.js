@@ -12,6 +12,9 @@ const toDuration = (seconds) => {
 export default async function AdminVideosPage() {
   const [videos, categories] = await Promise.all([getVideos(), getCategories()]);
 
+import { store } from "../../../data/store";
+
+export default function AdminVideosPage() {
   return (
     <>
       <Topbar title="Video Yönetimi" />
@@ -60,6 +63,11 @@ export default async function AdminVideosPage() {
                 <label>
                   Süre (sn)
                   <input name="duration" type="number" min="10" />
+                  <input name="categoryId" placeholder="Teknoloji" />
+                </label>
+                <label>
+                  Süre
+                  <input name="duration" placeholder="12:34" />
                 </label>
                 <button className="button" type="button">
                   Video Ekle
@@ -70,6 +78,7 @@ export default async function AdminVideosPage() {
               <h3>Video Listesi</h3>
               <div className="list">
                 {videos.map((video) => (
+                {store.videos.map((video) => (
                   <div key={video.id} className="list-item">
                     <div>
                       <strong>{video.title}</strong>
@@ -77,6 +86,7 @@ export default async function AdminVideosPage() {
                       <small>
                         {toDuration(video.durationSeconds)} • {video.category.name} • {video.uploader.name}
                       </small>
+                      <small>{video.duration} • {video.category}</small>
                     </div>
                     <button className="button secondary" type="button">
                       Sil

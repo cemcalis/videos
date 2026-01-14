@@ -17,6 +17,9 @@ export default async function VideosPage() {
     getCategories()
   ]);
 
+import { store } from "../../data/store";
+
+export default function VideosPage() {
   return (
     <>
       <Topbar title="Video Merkezi" />
@@ -28,12 +31,17 @@ export default async function VideosPage() {
             { href: "/categories", label: "Kategoriler" },
             { href: "/shorts", label: "Shorts" },
             { href: "/auth", label: "Kayıt / Giriş" }
+            { href: "/shorts", label: "Shorts" },
+            { href: "/auth", label: "Kayıt / Giriş" },
+            { href: "/admin", label: "Admin Panel" }
           ]}
         />
         <main className="page">
           <div className="page-header">
             <h2>Video kataloğu</h2>
             <p>Videolar, kategoriler ve reklam slotları aynı ekranda.</p>
+            <h2>Video kataloğu ve reklam slotları</h2>
+            <p>Video listesi, reklam yerleşimi ve süre yönetimi için görünüm.</p>
           </div>
 
           <section className="section-grid">
@@ -46,6 +54,10 @@ export default async function VideosPage() {
                       <strong>
                         {slot.placement} ({slot.slot})
                       </strong>
+                {store.ads.map((slot) => (
+                  <div key={slot.id} className="list-item">
+                    <div>
+                      <strong>{slot.placement} ({slot.slot})</strong>
                       <div>
                         {slot.size} • {slot.durationSeconds} sn
                       </div>
@@ -81,6 +93,15 @@ export default async function VideosPage() {
                   <a key={category.id} className="pill" href={`/categories#${category.id}`}>
                     {category.name}
                   </a>
+                {store.videos.map((video) => (
+                  <div key={video.id} className="list-item">
+                    <div>
+                      <strong>{video.title}</strong>
+                      <div>{video.description}</div>
+                      <small>Reklam: {video.ads.join(", ")}</small>
+                    </div>
+                    <span className="badge">{video.duration}</span>
+                  </div>
                 ))}
               </div>
             </div>

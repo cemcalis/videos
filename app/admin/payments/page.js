@@ -6,6 +6,9 @@ import { getPayments } from "../../../lib/queries";
 export default async function AdminPaymentsPage() {
   const payments = await getPayments();
 
+import { store } from "../../../data/store";
+
+export default function AdminPaymentsPage() {
   return (
     <>
       <Topbar title="Manuel Ödemeler" />
@@ -38,6 +41,11 @@ export default async function AdminPaymentsPage() {
                     <div>
                       <strong>{payment.user.name}</strong>
                       <div>{formatNumber(payment.amount)} TL • {payment.iban}</div>
+                {store.payments.map((payment) => (
+                  <div key={payment.id} className="list-item">
+                    <div>
+                      <strong>{payment.userId}</strong>
+                      <div>{payment.amount} TL • {payment.iban}</div>
                       <small>Durum: {payment.status}</small>
                     </div>
                     <button className="button secondary" type="button">

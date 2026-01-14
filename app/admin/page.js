@@ -6,6 +6,8 @@ import { getStats } from "../../lib/queries";
 export default async function AdminPage() {
   const stats = await getStats();
 
+
+export default function AdminPage() {
   return (
     <>
       <Topbar title="Admin Panel" />
@@ -49,6 +51,7 @@ export default async function AdminPage() {
           </section>
 
           <section className="section-grid" style={{ marginTop: 24 }}>
+          <section className="section-grid">
             <div className="card">
               <h3>SEO & Premium Ayarları</h3>
               <p>Başlık, açıklama, anahtar kelimeler ve premium deneme süresi.</p>
@@ -87,6 +90,7 @@ export default async function AdminPage() {
             <div className="card">
               <h3>Kullanıcı Yönetimi</h3>
               <p>Rol yönetimi ve kullanıcı listesi.</p>
+              <p>Premium aktivasyon ve kullanıcı listesi.</p>
               <a className="button" href="/admin/users">
                 Kullanıcılar
               </a>
