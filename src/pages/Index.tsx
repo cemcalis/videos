@@ -7,14 +7,15 @@ import PremiumBadge from "@/components/PremiumBadge";
 import { mockVideos, mockShorts, categories, mockAds } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import { Play, Flame, TrendingUp } from "lucide-react";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState("Tümü");
-  const [isPremium] = useState(false);
+  const { isPremium } = useAuthContext();
 
   return (
     <div className="min-h-screen bg-background">
-      <Header isPremium={isPremium} />
+      <Header />
       
       <main className="pt-20 pb-8">
         {/* Top Ad Banner - Only for non-premium */}
