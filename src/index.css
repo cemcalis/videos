@@ -1,70 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
 @layer base {
   :root {
-    /* HDYatak Dark Theme - Red & Black */
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    /* World-Class Design System - HDYatak Elite Red/Black */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 0 85% 50%;
+    --primary: 0 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 6%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 0 75% 45%;
+    --accent: 0 100% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 15%;
-    --ring: 0 85% 50%;
+    /* Luxury High-Contrast Borders */
+    --border: 0 0% 12%;
+    --input: 0 0% 8%;
+    --ring: 0 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
 
-    /* Custom HDYatak tokens */
-    --hdyatak-red: 0 85% 50%;
-    --hdyatak-red-glow: 0 100% 60%;
-    --hdyatak-dark: 0 0% 4%;
-    --hdyatak-surface: 0 0% 8%;
-    --hdyatak-surface-hover: 0 0% 12%;
-    --hdyatak-gold: 45 100% 50%;
-    --hdyatak-premium: 45 100% 55%;
+    /* Elite Branding Tokens */
+    --hdyatak-red: 0 100% 50%;
+    --hdyatak-red-dark: 0 100% 30%;
+    --hdyatak-red-glow: 0 100% 50% / 0.4;
+    --hdyatak-gold: 47 100% 50%;
+    --hdyatak-gold-glow: 47 100% 50% / 0.3;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(0 85% 50%) 0%, hsl(0 100% 35%) 100%);
-    --gradient-premium: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(35 100% 45%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 4%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 10%) 0%, hsl(0 0% 6%) 100%);
+    /* Ultra-Premium Cinematic Gradients */
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 0%) 100%);
+    --gradient-surface: radial-gradient(circle at top, hsl(0 0% 10%) 0%, hsl(0 0% 0%) 100%);
+    --gradient-red: linear-gradient(135deg, #ff0000 0%, #660000 100%);
+    --gradient-gold: linear-gradient(135deg, #FFD700 0%, #7A5C00 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%);
 
-    /* Shadows */
-    --shadow-glow: 0 0 30px hsl(0 85% 50% / 0.3);
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
-    --shadow-premium: 0 0 20px hsl(45 100% 50% / 0.3);
-
-    --sidebar-background: 0 0% 6%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 0 85% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 85% 50%;
+    /* High-Fidelity Professional Shadows */
+    --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 1);
+    --shadow-hard: 0 20px 60px -10px rgba(0, 0, 0, 1);
+    --shadow-red: 0 0 40px rgba(255, 0, 0, 0.15);
+    --shadow-gold: 0 0 40px rgba(255, 215, 0, 0.1);
   }
 }
 
@@ -100,64 +92,78 @@
 
 @layer components {
   .hdyatak-gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
+    @apply bg-clip-text text-transparent transition-all duration-500;
+    background-image: var(--gradient-red);
   }
 
   .hdyatak-premium-text {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-premium);
+    @apply bg-clip-text text-transparent font-black tracking-tighter;
+    background-image: var(--gradient-gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   }
 
   .hdyatak-card {
     background: var(--gradient-card);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-hard);
+    @apply border border-white/5 backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-primary/10;
   }
 
-  .hdyatak-glow {
-    box-shadow: var(--shadow-glow);
+  .hdyatak-glass {
+    background: var(--gradient-glass);
+    @apply backdrop-blur-xl border border-white/10;
   }
 
-  .hdyatak-premium-glow {
-    box-shadow: var(--shadow-premium);
+  .hdyatak-glow-red {
+    box-shadow: var(--shadow-red);
+  }
+
+  .hdyatak-glow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-cinematic {
+    @apply relative overflow-hidden transition-all duration-500 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-cinematic::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500 bg-white/10;
+  }
+
+  .btn-cinematic:hover::after {
+    @apply opacity-100;
   }
 }
 
 @layer utilities {
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  .animate-cinematic-in {
+    animation: cinematic-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px hsl(0 85% 50% / 0.3);
+  @keyframes cinematic-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      filter: blur(10px);
     }
-    50% {
-      box-shadow: 0 0 40px hsl(0 85% 50% / 0.5);
-    }
-  }
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
     }
   }
 
-  .shorts-scroll {
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    height: 100vh;
+  .glass-reflection {
+    @apply relative overflow-hidden;
   }
 
-  .shorts-item {
-    scroll-snap-align: start;
-    height: 100vh;
+  .glass-reflection::before {
+    content: "";
+    @apply absolute -inset-full bg-gradient-to-r from-transparent via-white/10 to-transparent -rotate-45 transition-all duration-1000 ease-in-out;
+  }
+
+  .glass-reflection:hover::before {
+    @apply left-full;
   }
 }

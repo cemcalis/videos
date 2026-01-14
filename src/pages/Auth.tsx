@@ -13,14 +13,14 @@ import { toast } from "sonner";
 const Auth = () => {
   const navigate = useNavigate();
   const { signIn, signUp } = useAuthContext();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  
+
   // Signup form state
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
@@ -31,13 +31,17 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await signIn(loginEmail, loginPassword);
-      
+      const { profile, error } = await signIn(loginEmail, loginPassword);
+
       if (error) {
-        toast.error(error.message);
+        toast.error(error.message || "Giriş başarısız");
       } else {
         toast.success("Giriş başarılı!");
-        navigate("/");
+        if (profile?.role === 'admin') {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       toast.error("Bir hata oluştu");
@@ -51,13 +55,17 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await signUp(signupEmail, signupPassword, signupFullName);
-      
+      const { profile, error } = await signUp(signupEmail, signupPassword, signupFullName);
+
       if (error) {
-        toast.error(error.message);
+        toast.error(error.message || "Kayıt başarısız");
       } else {
-        toast.success("Kayıt başarılı! Giriş yapabilirsiniz.");
-        navigate("/");
+        toast.success("Kayıt başarılı!");
+        if (profile?.role === 'admin') {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       toast.error("Bir hata oluştu");
@@ -130,8 +138,8 @@ const Auth = () => {
                     </div>
                   </div>
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-primary text-primary-foreground hdyatak-glow"
                     disabled={isLoading}
                   >
@@ -200,8 +208,8 @@ const Auth = () => {
                     <p className="text-xs text-muted-foreground">En az 6 karakter</p>
                   </div>
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-primary text-primary-foreground hdyatak-glow"
                     disabled={isLoading}
                   >
@@ -214,8 +222,8 @@ const Auth = () => {
 
             {/* Back to home */}
             <div className="mt-6 text-center">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="text-muted-foreground hover:text-foreground"
                 onClick={() => navigate("/")}
               >

@@ -17,16 +17,16 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
       <div className="relative">
         <div className="absolute inset-0 bg-primary rounded-lg blur-md opacity-50" />
         <div className="relative bg-primary rounded-lg p-1.5 flex items-center justify-center hdyatak-glow">
-          <Play 
-            size={sizes[size].icon} 
-            className="text-primary-foreground fill-current" 
+          <Play
+            size={sizes[size].icon}
+            className="text-primary-foreground fill-current"
           />
         </div>
       </div>
       {showText && (
-        <span className={`font-black tracking-tight ${sizes[size].text}`}>
-          <span className="text-foreground">HD</span>
-          <span className="hdyatak-gradient-text">YATAK</span>
+        <span className={`font-black tracking-tighter ${sizes[size].text}`}>
+          <span className="text-white">HD</span>
+          <span className="text-primary hdyatak-glow-red ml-1">YATAK</span>
         </span>
       )}
     </div>

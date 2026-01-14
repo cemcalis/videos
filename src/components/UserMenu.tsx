@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, LogOut, Settings, Crown, ChevronDown } from "lucide-react";
+import { User, LogOut, Settings, Crown, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,12 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 
 const UserMenu = () => {
   const navigate = useNavigate();
-  const { user, profile, isPremium, signOut } = useAuthContext();
+  const { user, profile, isPremium, isAdmin, signOut } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignOut = async () => {
@@ -32,18 +33,18 @@ const UserMenu = () => {
 
   if (!user) {
     return (
-      <Button 
-        variant="default" 
+      <Button
+        variant="default"
         size="sm"
         onClick={() => navigate("/auth")}
-        className="bg-primary text-primary-foreground"
+        className="bg-primary text-primary-foreground font-medium"
       >
-        Giriş Yap
+        Giriş Yap / Kayıt Ol
       </Button>
     );
   }
 
-  const displayName = profile?.full_name || profile?.username || user.email?.split("@")[0] || "Kullanıcı";
+  const displayName = profile?.name || user.displayName || user.email?.split("@")[0] || "Kullanıcı";
   const initials = displayName.charAt(0).toUpperCase();
 
   return (
@@ -51,11 +52,11 @@ const UserMenu = () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="flex items-center gap-2 px-2">
           <div className="relative">
-            {profile?.avatar_url ? (
-              <img 
-                src={profile.avatar_url} 
+            {profile?.avatar ? (
+              <img
+                src={profile.avatar}
                 alt={displayName}
-                className="w-8 h-8 rounded-full object-cover"
+                className="w-8 h-8 rounded-full object-cover border border-border/50"
               />
             ) : (
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
@@ -63,7 +64,7 @@ const UserMenu = () => {
               </div>
             )}
             {isPremium && (
-              <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-hdyatak-gold flex items-center justify-center">
+              <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-hdyatak-gold flex items-center justify-center border-2 border-background">
                 <Crown size={10} className="text-background" />
               </div>
             )}
@@ -72,10 +73,15 @@ const UserMenu = () => {
           <ChevronDown size={14} className="hidden sm:inline text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 bg-card border-border">
+      <DropdownMenuContent align="end" className="w-56 bg-card border-border backdrop-blur-md">
         <div className="px-3 py-2">
-          <p className="text-sm font-medium">{displayName}</p>
-          <p className="text-xs text-muted-foreground">{user.email}</p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-sm font-medium truncate">{displayName}</p>
+            {isAdmin && (
+              <Badge variant="outline" className="text-[10px] py-0 h-4 border-hdyatak-red text-hdyatak-red uppercase">Admin</Badge>
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground truncate">{user.email}</p>
           {isPremium && (
             <div className="flex items-center gap-1 mt-1">
               <Crown size={12} className="text-hdyatak-gold" />
@@ -84,6 +90,17 @@ const UserMenu = () => {
           )}
         </div>
         <DropdownMenuSeparator />
+
+        {isAdmin && (
+          <>
+            <DropdownMenuItem onClick={() => navigate("/admin")} className="cursor-pointer text-hdyatak-red font-medium">
+              <Shield size={16} className="mr-2" />
+              Yönetim Paneli
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
+
         <DropdownMenuItem onClick={() => navigate("/profile")} className="cursor-pointer">
           <User size={16} className="mr-2" />
           Profilim
@@ -99,9 +116,9 @@ const UserMenu = () => {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem 
-          onClick={handleSignOut} 
-          className="cursor-pointer text-destructive"
+        <DropdownMenuItem
+          onClick={handleSignOut}
+          className="cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive"
           disabled={isLoading}
         >
           <LogOut size={16} className="mr-2" />
